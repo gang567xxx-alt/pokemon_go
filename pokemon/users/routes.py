@@ -93,3 +93,37 @@ def profile():
             return redirect(url_for('users.profile'))
 
     return render_template('users/profile.html', title='Profile Page', user=user)
+
+
+@users_bp.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        # เช็ครหัสผ่านปัจจุบัน
+        if not bcrypt.check_password_hash(current_user.password, current_password):
+            flash('Current password is incorrect!', 'danger')
+            return redirect(url_for('users.change_password'))
+
+        # เช็ครหัสใหม่ตรงกัน
+        if new_password != confirm_password:
+            flash('New password does not match!', 'warning')
+            return redirect(url_for('users.change_password'))
+
+        # (กันพลาด) รหัสใหม่ห้ามว่าง
+        if not new_password:
+            flash('New password cannot be empty!', 'warning')
+            return redirect(url_for('users.change_password'))
+
+        # อัปเดตรหัสผ่าน
+        hashed = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        current_user.password = hashed
+        db.session.commit()
+
+        flash('Password changed successfully!', 'success')
+        return redirect(url_for('users.profile'))
+
+    return render_template('users/change_password.html', title='Change Password')

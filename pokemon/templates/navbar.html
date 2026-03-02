@@ -1,69 +1,75 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    {% if current_user.is_authenticated %}
-        <a class="navbar-brand" href="#">Pokemon Go</a>
-    {% else %}
-        <a class="navbar-brand" href="#">Pokemon Go</a>
-    {% endif %}
-    
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">Pokemon Go</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       {% if current_user.is_authenticated %}
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{url_for('users.index')}}">Home</a>
+            <a class="nav-link active" href="{{ url_for('users.index') }}">Home</a>
           </li>
           <li class="nav-item">
-            <a href="{{url_for('pokemons.index')}}" class="nav-link">Pokemons</a>
+            <a class="nav-link" href="{{ url_for('pokemons.index') }}">Pokemons</a>
           </li>
         </ul>
       {% else %}
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" href="#">Home</a>
           </li>
-          
         </ul>
       {% endif %}
-      
-      
-      
+
       <ul class="navbar-nav">
         {% if current_user.is_authenticated %}
-            
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{url_for('static', filename='img/' + current_user.avatar)}}" alt="" width="25" height="25">
-                Welcome, {{current_user.username}}
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{url_for('users.profile')}}">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ url_for('static', filename='img/' + current_user.avatar) }}"
+                   alt="" width="25" height="25">
+              Welcome, {{ current_user.username }}
+            </a>
+
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="{{ url_for('users.profile') }}">
                   <i class="bi bi-person-square"></i>
-                  Profile</a></li>
-                <li><a class="dropdown-item" href="#">
+                  Profile
+                </a>
+              </li>
+
+              <li>
+                <a class="dropdown-item" href="{{ url_for('users.change_password') }}">
                   <i class="bi bi-input-cursor-text"></i>
-                  Change Password</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{url_for('users.logout')}}">
+                  Change Password
+                </a>
+              </li>
+
+              <li><hr class="dropdown-divider"></li>
+
+              <li>
+                <a class="dropdown-item" href="{{ url_for('users.logout') }}">
                   <i class="bi bi-box-arrow-left"></i>
-                  Logout</a></li>
-              </ul>
-            </li>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
         {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('users.register')}}">Register</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('users.login')}}">Login</a>
-            </li>
-        
-        
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+          </li>
         {% endif %}
       </ul>
-      
     </div>
   </div>
 </nav>
