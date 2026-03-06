@@ -8,3 +8,22 @@ wheels/
 
 # Virtual environments
 .venv
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Database
+*.db
+
+# Flask
+instance/
+
+# Environment
+.env
+
+# VS Code
+.vscode/
